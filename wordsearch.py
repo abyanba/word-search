@@ -146,12 +146,12 @@ class WordSearchGUI:
         self.words = list(words)
         for r in range(12):
             for c in range(12):
-                self.labels[r][c].config(text=self.board[r][c], bg='SystemButtonFace')
+                self.labels[r][c].config(text=self.board[r][c], bg='lightgray')
         for i, lbl in enumerate(self.word_labels):
             if i < len(self.words):
-                lbl.config(text=self.words[i], bg='SystemButtonFace')
+                lbl.config(text=self.words[i], bg='lightgray')
             else:
-                lbl.config(text='', bg='SystemButtonFace')
+                lbl.config(text='', bg='lightgray')
 
     def solve_and_highlight(self):
         # Daftar warna pastel untuk highlight
@@ -163,9 +163,9 @@ class WordSearchGUI:
         # Clear previous highlights
         for r in range(12):
             for c in range(12):
-                self.labels[r][c].config(bg='SystemButtonFace')
+                self.labels[r][c].config(bg='lightgray')
         for lbl in self.word_labels:
-            lbl.config(bg='SystemButtonFace')
+            lbl.config(bg='lightgray')
         # Patch click to highlight with color per word
         highlight_map = {}  # (r0,c0,r1,c1): color
         def highlight(r0, c0, r1, c1, color):
