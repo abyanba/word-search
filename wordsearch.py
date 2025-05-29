@@ -112,8 +112,9 @@ class WordSearchGUI:
         word_frame = tk.Frame(self.master)
         word_frame.pack(side=tk.RIGHT, padx=10, pady=10)
         tk.Label(word_frame, text="Words to find:", font=("Arial", 12, "bold")).pack()
-        for w in self.words:
-            lbl = tk.Label(word_frame, text=w, font=("Arial", 12))
+        for i in range(15):
+            text = self.words[i] if i < len(self.words) else ''
+            lbl = tk.Label(word_frame, text=text, font=("Arial", 12))
             lbl.pack(anchor='w')
             self.word_labels.append(lbl)
         # Solve button
