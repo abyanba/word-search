@@ -1,55 +1,45 @@
-from typing import List
-
+from typing import List, Tuple
 
 class WordSearch:
-    def isExist(self, board: List[List[str]], word: str) -> bool:
-        # banyaknya baris di board
+    def isExist(self, board: List[List[str]], word: str) -> Tuple[int, int, int, int] | None:
         for row in range(len(board)):
-            # banyaknya kolom di satu row
             for col in range(len(board[0])):
-                # cocok sama karakter pertama, maka dfs
                 if board[row][col] == word[0]:
-                    if self.dfs(board, row, col, word):
-                        return True
-        return False
+                    path = []
+                    if self.dfs(board, row, col, word, path):
+                        return path[0][0], path[0][1], path[-1][0], path[-1][1]
+        return None
 
-    def dfs(self, board, row, col, word):
+    def dfs(self, board, row, col, word, path):
         if not word:
-            # udah sampe di karakter akhir
             return True
 
         if (
-            (0 <= row < len(board))
-            and (0 <= col < len(board[0]))
+            0 <= row < len(board)
+            and 0 <= col < len(board[0])
             and board[row][col] != "#"
             and board[row][col] == word[0]
         ):
             temp = board[row][col]
-            # udah dikunjungi
             board[row][col] = "#"
+            path.append((row, col))
 
-            # cek kanan, kiri, bawah, atas, bawah kiri, bawah kanan, atas kanan, atas kiri
-            for _rowInc, _colInc in [
-                (0, 1),
-                (0, -1),
-                (1, 0),
-                (-1, 0),
-                (1, -1),
-                (1, 1),
-                (-1, 1),
-                (-1, -1),
-            ]:
-                if self.dfs(board, row + _rowInc, col + _colInc, word[1:]):
+            for _rowInc, _colInc in [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]:
+                if self.dfs(board, row + _rowInc, col + _colInc, word[1:], path):
                     return True
 
             board[row][col] = temp
-            return False
+            path.pop()
 
+        return False
 
 if __name__ == "__main__":
     # testing
     instance = WordSearch()
-    board = [["T", "E", "S"], ["A", "B", "C"], ["1", "2", "3"]]
-    print(instance.isExist([row[:] for row in board], "TESCB21"))
-    # diagonal
-    print(instance.isExist([row[:] for row in board], "TB3"))
+    board = [
+	["T", "E", "S"], 
+	["A", "B", "C"], 
+	["1", "2", "3"]
+    ]
+    print(instance.isExist(board, "TESCB21"))
+    print(instance.isExist(board, "TESB"))

@@ -2,6 +2,7 @@ import random
 import string
 import tkinter as tk
 import pyautogui
+from dfs import WordSearch
 
 x0 = 0
 y0 = 0
@@ -58,30 +59,14 @@ words = load_words_from_file('words.txt', 14)
 board = place_words_on_board(words, 12)
 
 def solve(board, words):
+    ws = WordSearch()
     for word in words:
-        found = False
-        for r0 in range(len(board)):
-            for c0 in range(len(board[0])):
-                for dr in range(-1, 2):
-                    for dc in range(-1, 2):
-                        if dr == 0 and dc == 0:
-                            continue
-                        r1 = r0 + (dr * (len(word) - 1))
-                        c1 = c0 + (dc * (len(word) - 1))
-                        if 0 <= r1 < len(board) and 0 <= c1 < len(board[0]):
-                            w = get_word(board, r0, c0, dr, dc, r1, c1)
-                            if w == word:
-                                print(word)
-                                click(r0, c0, r1, c1)
-                                found = True
-                                break
-                    if found:
-                        break
-                if found:
-                    break
-            if found:
-                break
-
+        path = ws.isExist([list(row) for row in board], word)
+        if path:
+            r0, c0, r1, c1 = path
+            print(word)
+            click(r0, c0, r1, c1)
+            
 def get_word(board, r0, c0, dr, dc, r1, c1):
     r = r0
     c = c0
