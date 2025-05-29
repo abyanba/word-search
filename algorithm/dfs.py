@@ -28,8 +28,17 @@ class WordSearch:
             # udah dikunjungi
             board[row][col] = "#"
 
-            # cek kanan, kiri, bawah, atas
-            for _rowInc, _colInc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+            # cek kanan, kiri, bawah, atas, bawah kiri, bawah kanan, atas kanan, atas kiri
+            for _rowInc, _colInc in [
+                (0, 1),
+                (0, -1),
+                (1, 0),
+                (-1, 0),
+                (1, -1),
+                (1, 1),
+                (-1, 1),
+                (-1, -1),
+            ]:
                 if self.dfs(board, row + _rowInc, col + _colInc, word[1:]):
                     return True
 
@@ -40,10 +49,8 @@ class WordSearch:
 if __name__ == "__main__":
     # testing
     instance = WordSearch()
-    board = [
-	["T", "E", "S"], 
-	["A", "B", "C"], 
-	["1", "2", "3"]
-    ]
-    print(instance.isExist(board, "TESCB21"))
-    print(instance.isExist(board, "TESB"))
+    board = [["T", "E", "S"], ["A", "B", "C"], ["1", "2", "3"]]
+    # print(instance.isExist(board, "TESCB21"))
+    # print(instance.isExist(board, "TESB"))
+    # diagonal
+    print(instance.isExist(board, "TB3"))
