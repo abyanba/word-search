@@ -50,7 +50,6 @@ if __name__ == "__main__":
     # testing
     instance = WordSearch()
     board = [["T", "E", "S"], ["A", "B", "C"], ["1", "2", "3"]]
-    # print(instance.isExist(board, "TESCB21"))
-    # print(instance.isExist(board, "TESB"))
+    print(instance.isExist([row[:] for row in board], "TESCB21"))
     # diagonal
-    print(instance.isExist(board, "TB3"))
+    print(instance.isExist([row[:] for row in board], "TB3"))
